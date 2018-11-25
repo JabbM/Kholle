@@ -12,7 +12,7 @@ import argparse
 import re
 
 #ajout des arguments du fichier éxécutable
-parser = argparse.ArgumentParser(description='Ce programme est une sorte d’utilitaire permettant de faire des opérations simple surune liste d’entiers, qui sera stockée dans un fichier au format csv.')
+parser = argparse.ArgumentParser(description='Ce programme permet de faire des opérations simple sur une liste d’entiers.')
 parser.add_argument('-l', action='store_true', help='Affiche le contenu de la liste.')
 parser.add_argument('-a', nargs='+', help='Ajoute des éléments à la liste (... -a [val1] [val2] ...')
 parser.add_argument('-c', action='store_true', help='Supprime tous les éléments de la liste.')
@@ -27,13 +27,13 @@ subbparsers.add_argument('-t', action='store_true', help='Trie la liste dans l�
 subbparsers.add_argument('--desc', action='store_true', help='Trie la liste dans l’ordre décroissant.')
 args = parser.parse_args()
 
-#regex pour contraindre à n'entrer que des nombres entiers
+#regex pour contraindre à entrer que des nombres entiers
 regex = re.compile('^[0-9]+$')
 
 #création liste vide
 tab = []
 
-#fonction de lecture du fichier test.csv, et remplissage te la liste
+#fonction de lecture du fichier test.csv, et remplissage de la liste
 def reader():
   with open('./test.csv', 'r', newline='') as fich:
     csv_r = csv.reader(fich)
@@ -60,91 +60,91 @@ def delete():
     csv_d = csv.writer(fich)
     csv_d.writerow('')
 
-#chaine de conditions pour attribuer les actions, aux arguments spécifiques
-# def main():
-if args.l:
-    reader()
-    if len(tab) == 0:
-        print("Le fichier est vide")
-    else:
-        print(tab)
-elif args.a:
-    reader()
-    for n in args.a:
-        add(n)
-    writer(tab)
-    print("les données ont bien été ajoutés")
-elif args.c:
-    delete()
-    print("Les données ont bien été supprimés")
-elif args.s and args.max:
-    reader()
-    maxi = 0
-    if len(tab) == 0:
-        print("Le fichier est vide")
-    else:
-        for i in range(len(tab)):
-            if int(tab[i]) > maxi:
-                maxi = int(tab[i])
-        print("La valeur maximal est : ", maxi)
-elif args.s and args.min:
-    reader()
-    min = 999999
-    if len(tab) == 0:
-        print("Le fichier est vide")
-    else:
-        for i in range(len(tab)):
-            if int(tab[i]) < min:
-                min = int(tab[i])
-        print("La valeur minimum est : ", min)
-elif args.s and args.moy:
-    reader()
-    moy = 0
-    nbr = 0
-    if len(tab) == 0:
-        print("Le fichier est vide")
-    else:
-        for i in range(len(tab)):
-            moy = moy + int(tab[i])
-        result = moy/len(tab)
-        print("La moyenne est de :", result)
-elif args.s and args.sum:
-    reader()
-    somme = 0
-    if len(tab) == 0:
-        print("Le fichier est vide")
-    else:
-        for i in range(len(tab)):
-            somme = somme + int(tab[i])
-        print("La somme de tous les éléments de la liste : ", somme)
-elif args.t and args.desc:
-    reader()
-    if len(tab) == 0:
-        print("Le fichier est vide")
-    else:
-        tab.sort(reverse=True)
+#fonction conenant la chaine de conditions pour attribuer les actions, aux arguments spécifiques
+def main():
+    if args.l:
+        reader()
+        if len(tab) == 0:
+            print("Le fichier est vide")
+        else:
+            print(tab)
+    elif args.a:
+        reader()
+        for n in args.a:
+            add(n)
         writer(tab)
-        print("La Liste à bien été trié")
-elif args.t:
-    reader()
-    if len(tab) == 0:
-        print("Le fichier est vide")
-    else:
-        tab.sort()
-        writer(tab)
-        print("La Liste à bien été trié")
-elif args.s:
-    print("Cette commande est obligatoirement suivi d'un autre argument")
-    print("[--help] pour plus d'information")
-elif args.max:
-    print("Cette commande est obligatoirement précédé de l'argument [-s]")
-elif args.min:
-    print("Cette commande est obligatoirement précédé de l'argument [-s]")
-elif args.sum:
-    print("Cette commande est obligatoirement précédé de l'argument [-s]")
-elif args.moy:
-    print("Cette commande est obligatoirement précédé de l'argument [-s]")
-elif args.desc:
-    print("Cette commande est obligatoirement précédé de l'argument [-t]")
+        print("les données ont bien été ajoutés")
+    elif args.c:
+        delete()
+        print("Les données ont bien été supprimés")
+    elif args.s and args.max:
+        reader()
+        maxi = 0
+        if len(tab) == 0:
+            print("Le fichier est vide")
+        else:
+            for i in range(len(tab)):
+                if int(tab[i]) > maxi:
+                    maxi = int(tab[i])
+            print("La valeur maximal est : ", maxi)
+    elif args.s and args.min:
+        reader()
+        min = 999999
+        if len(tab) == 0:
+            print("Le fichier est vide")
+        else:
+            for i in range(len(tab)):
+                if int(tab[i]) < min:
+                    min = int(tab[i])
+            print("La valeur minimum est : ", min)
+    elif args.s and args.moy:
+        reader()
+        moy = 0
+        nbr = 0
+        if len(tab) == 0:
+            print("Le fichier est vide")
+        else:
+            for i in range(len(tab)):
+                moy = moy + int(tab[i])
+            result = moy/len(tab)
+            print("La moyenne est de :", result)
+    elif args.s and args.sum:
+        reader()
+        somme = 0
+        if len(tab) == 0:
+            print("Le fichier est vide")
+        else:
+            for i in range(len(tab)):
+                somme = somme + int(tab[i])
+            print("La somme de tous les éléments de la liste : ", somme)
+    elif args.t and args.desc:
+        reader()
+        if len(tab) == 0:
+            print("Le fichier est vide")
+        else:
+            tab.sort(reverse=True)
+            writer(tab)
+            print("La Liste à bien été trié")
+    elif args.t:
+        reader()
+        if len(tab) == 0:
+            print("Le fichier est vide")
+        else:
+            tab.sort()
+            writer(tab)
+            print("La Liste à bien été trié")
+    elif args.s:
+        print("Cette commande est obligatoirement suivi d'un autre argument")
+        print("[--help] pour plus d'information")
+    elif args.max:
+        print("Cette commande est obligatoirement précédé de l'argument [-s]")
+    elif args.min:
+        print("Cette commande est obligatoirement précédé de l'argument [-s]")
+    elif args.sum:
+        print("Cette commande est obligatoirement précédé de l'argument [-s]")
+    elif args.moy:
+        print("Cette commande est obligatoirement précédé de l'argument [-s]")
+    elif args.desc:
+        print("Cette commande est obligatoirement précédé de l'argument [-t]")
 
-# main()
+main()
