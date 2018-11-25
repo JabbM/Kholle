@@ -13,14 +13,15 @@ parser = argparse.ArgumentParser(description='Ce programme est une sorte d’uti
 parser.add_argument('-l', action='store_true', help='Affiche le contenu de la liste.')
 parser.add_argument('-a', nargs='+', help='Ajoute des éléments à la liste (... -a [val1] [val2] ...')
 parser.add_argument('-c', action='store_true', help='Supprime tous les éléments de la liste.')
-parser.add_argument('-t', action='store_true', help='Trie la liste dans l’ordre croissant.')
-parser.add_argument('--desc', action='store_true', help='Trie la liste dans l’ordre décroissant.')
 subparsers = parser.add_argument_group(title='subcommands', description='Commande qui ont besoin de l\'argument -s')
-subparsers.add_argument('-s', action='store_true', help='')
+subparsers.add_argument('-s', action='store_true', help='Ne fait rien')
 subparsers.add_argument('--max', action='store_true', help='Affiche la valeur maximum contenu dans la liste.')
 subparsers.add_argument('--min', action='store_true', help='Affiche la valeur minimum contenu dans la liste.')
 subparsers.add_argument('--moy', action='store_true', help='Affiche la moyenne de tous les éléments dans la liste.')
 subparsers.add_argument('--sum', action='store_true', help='Affiche la somme de tous les éléments dans la liste.')
+subbparsers = parser.add_argument_group(title='subcommands', description='Commande qui ont besoin de l\'argument -t')
+subbparsers.add_argument('-t', action='store_true', help='Trie la liste dans l’ordre croissant.')
+subbparsers.add_argument('--desc', action='store_true', help='Trie la liste dans l’ordre décroissant.')
 args = parser.parse_args()
 
 tab = []
