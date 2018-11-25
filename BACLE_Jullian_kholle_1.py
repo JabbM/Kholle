@@ -6,9 +6,11 @@
 #     25/11/2018    #
 #####################
 
+#import nécessaire au fonctionnement du programme
 import csv
 import argparse
 
+#ajout des arguments du fichier éxécutable
 parser = argparse.ArgumentParser(description='Ce programme est une sorte d’utilitaire permettant de faire des opérations simple surune liste d’entiers, qui sera stockée dans un fichier au format csv.')
 parser.add_argument('-l', action='store_true', help='Affiche le contenu de la liste.')
 parser.add_argument('-a', nargs='+', help='Ajoute des éléments à la liste (... -a [val1] [val2] ...')
@@ -24,9 +26,10 @@ subbparsers.add_argument('-t', action='store_true', help='Trie la liste dans l�
 subbparsers.add_argument('--desc', action='store_true', help='Trie la liste dans l’ordre décroissant.')
 args = parser.parse_args()
 
+#création liste vide
 tab = []
 
-
+#fonction de lecture du fichier test.csv, et remplissage te la liste
 def reader():
   with open('./test.csv', 'r', newline='') as fich:
     csv_r = csv.reader(fich)
@@ -34,20 +37,23 @@ def reader():
         for i in range(len(row)):
             tab.append(row[i])
 
+#fonction décriture dans le fichier test.csv
 def writer(value):
   with open('./test.csv', 'w', newline='') as fich:
     csv_w = csv.writer(fich)
     csv_w.writerow(value)
 
+#fonction d'ajout de l'argument dans la liste
 def add(arg):
     tab.append(arg)
 
+#fonction de suppression du contenu du fichier test.csv
 def delete():
   with open('./test.csv', 'w', newline='') as fich:
     csv_d = csv.writer(fich)
     csv_d.writerow('')
 
-
+#chaine de conditions pour attribuer les actions, aux arguments spécifiques
 if args.l:
     reader()
     if len(tab) == 0:
@@ -59,10 +65,10 @@ elif args.a:
     for n in args.a:
         add(n)
     writer(tab)
-    print("les données ont bien été ajouté")
+    print("les données ont bien été ajoutés")
 elif args.c:
     delete()
-    print("Les données ont bien été supprimé")
+    print("Les données ont bien été supprimés")
 elif args.s and args.max:
     reader()
     maxi = 0
@@ -72,7 +78,7 @@ elif args.s and args.max:
         for i in range(len(tab)):
             if int(tab[i]) > maxi:
                 maxi = int(tab[i])
-        print("La valeur maximal est : ",maxi)
+        print("La valeur maximal est : ", maxi)
 elif args.s and args.min:
     reader()
     min = 999999
@@ -93,7 +99,7 @@ elif args.s and args.moy:
         for i in range(len(tab)):
             moy = moy + int(tab[i])
         result = moy/len(tab)
-        print(result)
+        print("La moyenne est de :", result)
 elif args.s and args.sum:
     reader()
     somme = 0
@@ -102,18 +108,20 @@ elif args.s and args.sum:
     else:
         for i in range(len(tab)):
             somme = somme + int(tab[i])
-        print("La somme de tous les éléments de la liste : ",somme)
+        print("La somme de tous les éléments de la liste : ", somme)
 elif args.t and args.desc:
     reader()
     if len(tab) == 0:
         print("Le fichier est vide")
     else:
-        trieDesc = sorted(tab, reverse=True)
-        print(trieDesc)
+        tab.sort(reverse=True)
+        writer(tab)
+        print("La Liste à bien été trié")
 elif args.t:
     reader()
     if len(tab) == 0:
         print("Le fichier est vide")
     else:
-        trieAsc = sorted(tab)
-        print(trieAsc)
+        tab.sort()
+        writer(tab)
+        print("La Liste à bien été trié")
