@@ -39,7 +39,7 @@ def reader():
     csv_r = csv.reader(fich)
     for row in csv_r:
         for i in range(len(row)):
-            tab.append(row[i])
+            tab.append(int(row[i]))
 
 #fonction décriture dans le fichier test.csv
 def writer(value):
@@ -61,90 +61,90 @@ def delete():
     csv_d.writerow('')
 
 #chaine de conditions pour attribuer les actions, aux arguments spécifiques
-def main():
-    if args.l:
-        reader()
-        if len(tab) == 0:
-            print("Le fichier est vide")
-        else:
-            print(tab)
-    elif args.a:
-        reader()
-        for n in args.a:
-            add(n)
+# def main():
+if args.l:
+    reader()
+    if len(tab) == 0:
+        print("Le fichier est vide")
+    else:
+        print(tab)
+elif args.a:
+    reader()
+    for n in args.a:
+        add(n)
+    writer(tab)
+    print("les données ont bien été ajoutés")
+elif args.c:
+    delete()
+    print("Les données ont bien été supprimés")
+elif args.s and args.max:
+    reader()
+    maxi = 0
+    if len(tab) == 0:
+        print("Le fichier est vide")
+    else:
+        for i in range(len(tab)):
+            if int(tab[i]) > maxi:
+                maxi = int(tab[i])
+        print("La valeur maximal est : ", maxi)
+elif args.s and args.min:
+    reader()
+    min = 999999
+    if len(tab) == 0:
+        print("Le fichier est vide")
+    else:
+        for i in range(len(tab)):
+            if int(tab[i]) < min:
+                min = int(tab[i])
+        print("La valeur minimum est : ", min)
+elif args.s and args.moy:
+    reader()
+    moy = 0
+    nbr = 0
+    if len(tab) == 0:
+        print("Le fichier est vide")
+    else:
+        for i in range(len(tab)):
+            moy = moy + int(tab[i])
+        result = moy/len(tab)
+        print("La moyenne est de :", result)
+elif args.s and args.sum:
+    reader()
+    somme = 0
+    if len(tab) == 0:
+        print("Le fichier est vide")
+    else:
+        for i in range(len(tab)):
+            somme = somme + int(tab[i])
+        print("La somme de tous les éléments de la liste : ", somme)
+elif args.t and args.desc:
+    reader()
+    if len(tab) == 0:
+        print("Le fichier est vide")
+    else:
+        tab.sort(reverse=True)
         writer(tab)
-        print("les données ont bien été ajoutés")
-    elif args.c:
-        delete()
-        print("Les données ont bien été supprimés")
-    elif args.s and args.max:
-        reader()
-        maxi = 0
-        if len(tab) == 0:
-            print("Le fichier est vide")
-        else:
-            for i in range(len(tab)):
-                if int(tab[i]) > maxi:
-                    maxi = int(tab[i])
-            print("La valeur maximal est : ", maxi)
-    elif args.s and args.min:
-        reader()
-        min = 999999
-        if len(tab) == 0:
-            print("Le fichier est vide")
-        else:
-            for i in range(len(tab)):
-                if int(tab[i]) < min:
-                    min = int(tab[i])
-            print("La valeur minimum est : ", min)
-    elif args.s and args.moy:
-        reader()
-        moy = 0
-        nbr = 0
-        if len(tab) == 0:
-            print("Le fichier est vide")
-        else:
-            for i in range(len(tab)):
-                moy = moy + int(tab[i])
-            result = moy/len(tab)
-            print("La moyenne est de :", result)
-    elif args.s and args.sum:
-        reader()
-        somme = 0
-        if len(tab) == 0:
-            print("Le fichier est vide")
-        else:
-            for i in range(len(tab)):
-                somme = somme + int(tab[i])
-            print("La somme de tous les éléments de la liste : ", somme)
-    elif args.t and args.desc:
-        reader()
-        if len(tab) == 0:
-            print("Le fichier est vide")
-        else:
-            tab.sort(reverse=True)
-            writer(tab)
-            print("La Liste à bien été trié")
-    elif args.t:
-        reader()
-        if len(tab) == 0:
-            print("Le fichier est vide")
-        else:
-            tab.sort()
-            writer(tab)
-            print("La Liste à bien été trié")
-    elif args.s:
-        print("Cette commande est obligatoirement suivi d'un autre argument")
-        print("[--help] pour plus d'information")
-    elif args.max:
-        print("Cette commande est obligatoirement précédé de l'argument [-s]")
-    elif args.min:
-        print("Cette commande est obligatoirement précédé de l'argument [-s]")
-    elif args.sum:
-        print("Cette commande est obligatoirement précédé de l'argument [-s]")
-    elif args.moy:
-        print("Cette commande est obligatoirement précédé de l'argument [-s]")
-    elif args.desc:
-        print("Cette commande est obligatoirement précédé de l'argument [-t]")
+        print("La Liste à bien été trié")
+elif args.t:
+    reader()
+    if len(tab) == 0:
+        print("Le fichier est vide")
+    else:
+        tab.sort()
+        writer(tab)
+        print("La Liste à bien été trié")
+elif args.s:
+    print("Cette commande est obligatoirement suivi d'un autre argument")
+    print("[--help] pour plus d'information")
+elif args.max:
+    print("Cette commande est obligatoirement précédé de l'argument [-s]")
+elif args.min:
+    print("Cette commande est obligatoirement précédé de l'argument [-s]")
+elif args.sum:
+    print("Cette commande est obligatoirement précédé de l'argument [-s]")
+elif args.moy:
+    print("Cette commande est obligatoirement précédé de l'argument [-s]")
+elif args.desc:
+    print("Cette commande est obligatoirement précédé de l'argument [-t]")
 
-main()
+# main()
